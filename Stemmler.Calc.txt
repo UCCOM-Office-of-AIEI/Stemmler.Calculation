@@ -1,0 +1,36 @@
+The input file will be structured as an excel sheet, with a tab called "Courses" with the following columns:
+
+Acad Yr	Ucid	Course Name	Is ICE	Begin Date	End Date	Weeks	Jan Date	Grad Date	Is 2H	2H Weeks	Intensive	Clinical
+
+
+The following columns will be filled in:
+
+Acad Yr = String, the academic year that the course occured.
+ID = String, the Students unique Identifier.
+Course Name = String, name of the course
+Is ICE = Bool, TRUE FALSE are the only options
+Begin Date =  Date, Start Date of the course
+End Date = Date, End Date of the course
+Grad Date = Date, Graduation Date of the Student.
+Intensive = int, 1 or 0. Identifying that a course is intensive.
+Clinical= int, 1 or 0. Identifying that a course is clinical.
+
+
+The following columns need to be calculated, and if the column is not there then it needs to be created:
+
+Weeks = int, The number of weeks that the course is. Calculation is End Date - Begin Date and Round up to the nearest week.
+Jan Date = Date, Always January 4th of the second year of Acad Yr. Extract the year that comes after the "-" in Acad Yr. Example is "2015-2016" for Acad Yr would be "1/4/2016".
+Is 2H = Bool, 1 or 0. Identifying if a courses "End Date" occurs after the "Jan Date" value.
+2H Weeks = int, Calculation is "Grad Date" - "Jan Date" and rounded up to the nearest week.
+
+After you have your dataset prepared, our analysis will be calculating and outputting results in a table with the following columns:
+
+Consortium ID	Intensive Rigor Score	Clinical Rigor Score	Time Score	comment
+
+
+Consortium ID = String, this is a proxy for the student IDs from the input table. Calculated by sorting the Distince Unique Student ID's and assign and index to them starting with 0001. The final output format then looks like formatted in "1-<grad year>-<calculated index>".
+Intensive Rigor Score = float, must remain below 1. Score created to find the intensity of a students fourth year clinical experience. Calculated based counting the total number of weeks of the courses flagged to be "Intensive" per ID, and dividing the total by 52.
+Clinical Rigor Score = float, must remain below 1. Score created to find the number of weeks of a students fourth year clinical experience. Calculated based counting the total number of weeks of the courses flagged to be "Clinical" per ID, and dividing the total by 52.
+Time Score = float, must remain below 1. Score created to find the time component of the second half of a students fourth year clinical experience. Calculated based counting the total number of weeks of the courses flagged to be "2H" and "Clinical" per ID, and dividing the total by the value in 2H weeks.
+comment = left for comment for the end user. Leave blank.
+
